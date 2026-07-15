@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RigAI - AI Chat Assistant</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon-8BNZayr6.svg">
+  <!-- Google Fonts: Inter & JetBrains Mono for Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="./assets/index-DRkpR1yi.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BSs0NBpH.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-header">
+          <svg class="app-logo" viewBox="0 0 24 24" width="22" height="22">
+            <path d="M12 2L2 22h20L12 2zm0 4.3l6.5 12.7H5.5L12 6.3z" fill="url(#logo-grad)"/>
+            <circle cx="12" cy="14" r="2.5" fill="#38bdf8"/>
+            <defs>
+              <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ec4899" />
+                <stop offset="100%" stop-color="#3b82f6" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="app-name">RigAI</span>
+        </div>
+
+        <button id="new-chat-btn" class="new-chat-btn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Cuộc trò chuyện mới</span>
+        </button>
+
+        <div class="sidebar-history">
+          <div class="history-label">Gần đây</div>
+          <div id="history-list" class="history-list">
+            <!-- Dynamic history items will be rendered here -->
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <!-- Status summary indicators -->
+        <div class="status-summary">
+          <div class="status-model-info">
+            <span class="dot-active"></span>
+            <span id="status-current-model">GPT-4o</span>
+          </div>
+          <div id="status-state" class="status-state text-yellow">Sẵn sàng</div>
+        </div>
+
+        <!-- Collapsible Settings Panel in Bottom-Left Corner -->
+        <div class="settings-container">
+          <button id="settings-toggle-btn" class="settings-toggle-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span>Cài đặt & API</span>
+          </button>
+
+          <!-- The Floating Settings Drawer -->
+          <div id="settings-panel" class="settings-panel hidden">
+            <div class="settings-header">
+              <h4>Cấu hình AI</h4>
+              <button id="settings-close-btn" class="close-panel-btn">&times;</button>
+            </div>
+            <div class="settings-body">
+              <div class="form-group">
+                <label for="api-url-input">API Endpoint URL</label>
+                <input type="text" id="api-url-input" placeholder="https://rim8kde.abc-tunnel.us/v1">
+              </div>
+
+              <div class="form-group">
+                <label for="api-key-input">API Key</label>
+                <div class="input-password-wrapper">
+                  <input type="password" id="api-key-input" placeholder="Mã bảo mật API...">
+                  <button id="toggle-api-key" class="icon-toggle-btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="model-select">Chọn mô hình</label>
+                <select id="model-select">
+                  <option value="gpt-4o" selected>GPT-4o (Khuyên dùng)</option>
+                  <option value="gpt-4o-mini">GPT-4o Mini</option>
+                  <option value="claude-3-5-sonnet">Claude 3.5 Sonnet</option>
+                  <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+                  <option value="custom">-- Nhập mô hình khác --</option>
+                </select>
+                <input type="text" id="custom-model-input" class="hidden" placeholder="Nhập mã mô hình (ví dụ: cc/gpt-4o)">
+                <small class="help-text">Dùng với 9Router: <code>tiền-tố/tên-mô-hình</code> hoặc tên <code>Combo</code> của bạn.</small>
+              </div>
+
+
+              <div class="form-row">
+                <div class="form-group half">
+                  <label for="temperature-input">Temp: <span id="temp-val">0.7</span></label>
+                  <input type="range" id="temperature-input" min="0" max="2" step="0.1" value="0.7">
+                </div>
+                <div class="form-group half">
+                  <label for="max-tokens-input">Tokens: <span id="tokens-val">2048</span></label>
+                  <input type="range" id="max-tokens-input" min="100" max="8192" step="100" value="2048">
+                </div>
+              </div>
+
+              <button id="save-config-btn" class="save-btn">Lưu thay đổi</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Workspace -->
+    <main class="workspace">
+      <!-- Upper Header Bar -->
+      <header class="workspace-header">
+        <div class="header-left">
+          <h2 id="active-chat-title" class="chat-title">Hội thoại mới</h2>
+        </div>
+        
+        <nav class="tab-navigation">
+          <button class="tab-btn active" data-tab="conversation">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tab-icon">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Hội thoại
+          </button>
+          <button class="tab-btn" data-tab="favorites">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="tab-icon fav-icon">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            Yêu thích
+          </button>
+        </nav>
+      </header>
+
+      <!-- Central Views Container -->
+      <div class="view-viewport">
+        <!-- View 1: Active Chat View -->
+        <section id="tab-conversation" class="tab-content active">
+          <!-- API Warning banner -->
+          <div id="api-key-warning" class="warning-banner hidden">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>Thiết lập **API Key** trong **Cài đặt & API** ở góc dưới bên trái để trò chuyện.</span>
+            <button id="go-to-config-btn" class="btn-small">Mở Cài đặt</button>
+          </div>
+
+          <!-- Chat messages stream -->
+          <div id="chat-messages" class="chat-messages">
+            <!-- Render welcome screen or messages -->
+            <div class="welcome-screen">
+              <div class="welcome-header">
+                <h2>Chào bạn, tôi là RigAI</h2>
+                <p>Một trợ lý AI mạnh mẽ, giao diện tối giản như Gemini. Tôi có thể giúp gì cho bạn hôm nay?</p>
+              </div>
+              <div class="quick-prompts">
+                <button class="prompt-card" data-prompt="Viết một bài thơ ngắn mô tả vẻ đẹp của lập trình web nghệ thuật.">
+                  <span class="card-icon">✍️</span>
+                  <span class="card-text">Viết thơ lập trình</span>
+                </button>
+                <button class="prompt-card" data-prompt="Hãy giải thích lý thuyết lượng tử (quantum physics) một cách dễ hiểu cho học sinh lớp 5.">
+                  <span class="card-icon">🔬</span>
+                  <span class="card-text">Giải thích vật lý lượng tử</span>
+                </button>
+                <button class="prompt-card" data-prompt="Viết một đoạn code Javascript tạo ra hiệu ứng ma trận (matrix waterfall code) trên canvas.">
+                  <span class="card-icon">💻</span>
+                  <span class="card-text">Hiệu ứng Matrix JS</span>
+                </button>
+                <button class="prompt-card" data-prompt="Lập danh sách 5 mẹo giúp cải thiện kỹ năng tối ưu hóa CSS cho giao diện mượt mà.">
+                  <span class="card-icon">⚡</span>
+                  <span class="card-text">Tối ưu hiệu năng CSS</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- View 2: Saved Favorites View -->
+        <section id="tab-favorites" class="tab-content">
+          <div class="favorites-wrapper">
+            <div id="favorites-list" class="favorites-list">
+              <p class="empty-state">Chưa có câu trả lời yêu thích nào được lưu lại.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Bottom Chat Input Bar -->
+      <footer class="workspace-footer">
+        <div class="chat-input-bar">
+          <input type="text" id="chat-input" placeholder="Nhập tin nhắn hoặc yêu cầu cho RigAI..." autocomplete="off">
+          <div class="input-actions-bar">
+            <button id="clear-btn" class="circle-action-btn" title="Xóa hội thoại hiện tại">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+              </svg>
+            </button>
+            <button id="send-btn" class="send-action-btn" title="Gửi tin nhắn (Enter)">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="footer-note">
+          RigAI có thể đưa ra câu trả lời không chính xác. Hãy kiểm tra lại các thông tin quan trọng.
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Main JavaScript Bundle -->
+</body>
+</html>
