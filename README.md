@@ -25,11 +25,11 @@ RigAI là một hệ thống trí tuệ nhân tạo được xây dựng trên n
 “Cho tôi 5 mẹo để quản lý thời gian hiệu quả”	Đưa ra danh sách với giải thích ngắn, dễ áp dụng
 
 
-#🤝 Đóng góp
+# 🤝 Đóng góp
 Mọi đóng góp đều được chào đón! 
 
 
-#Using 9Router for API key.
+# Using 9Router for API key.
 
 
 Made with 💚 và một chút trí tuệ nhân tạo.
