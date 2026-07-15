@@ -48,9 +48,13 @@ marked.use({
 });
 
 // App State
+const defaultApiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'https://rim8kde.abc-tunnel.us/v1'
+  : `${window.location.origin}/api`;
+
 const state = {
   apiKey: localStorage.getItem('rigai_api_key') || '',
-  apiUrl: localStorage.getItem('rigai_api_url') || 'https://rim8kde.abc-tunnel.us/v1',
+  apiUrl: localStorage.getItem('rigai_api_url') || defaultApiUrl,
   activeModel: localStorage.getItem('rigai_active_model') || 'gpt-4o',
   systemPrompt: localStorage.getItem('rigai_system_prompt') || 'Bạn là RigAI, một trợ lý thông minh nhân tạo mạnh mẽ, thân thiện, và chính xác. Trả lời bằng tiếng Việt một cách rõ ràng, chi tiết nhưng súc tích, định dạng Markdown đẹp mắt khi cần.',
   temperature: parseFloat(localStorage.getItem('rigai_temperature')) || 0.7,
