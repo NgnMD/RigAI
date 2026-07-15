@@ -15,17 +15,18 @@ RigAI là một hệ thống trí tuệ nhân tạo được xây dựng trên n
 
 ⚡ Phản hồi nhanh, thân thiện: giọng điệu tích cực, sẵn sàng giúp đỡ.
 
-🧪 Ví dụ tương tác
-Người dùng	Trả lời của RigAI
+# 🧪 Ví dụ tương tác
 “Viết một bài thơ ngắn về tình bạn”	(chấp nhận lời và đọc ngay một bài thơ 4 câu lục bát)
 “Trong Python, dict và defaultdict khác nhau thế nào?”	Giải thích cặn kẽ kèm ví dụ code minh họa, format gọn gàng
 “Cho tôi 5 mẹo để quản lý thời gian hiệu quả”	Đưa ra danh sách với giải thích ngắn, dễ áp dụng
-🤝 Đóng góp
-Mọi đóng góp đều được chào đón! Bạn có thể:
 
-Using 9Router for API key.
+#🤝 Đóng góp
+Mọi đóng góp đều được chào đón! 
+
+
+#Using 9Router for API key.
 
 
 Made with 💚 và một chút trí tuệ nhân tạo.
 
-(This README is made by RIGAI)
+(This README is made by RigAI)
